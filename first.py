@@ -1,1 +1,2 @@
-print("Hello world!")
+print("My first project")
+print("Hello again")
