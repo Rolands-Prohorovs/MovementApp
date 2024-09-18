@@ -41,13 +41,13 @@ Sentence = 'Finding a substring'
 
 # print(Sentence[0:222])
 
-# print(Sentence[-2])
-# print(Sentence[:9])
-# print(Sentence[0:9])
-# print(Sentence[-9:-1])
-# print(Sentence[2:9:3])
-# print(Sentence[::3])
-# print(Sentence[::-1])
+print(Sentence[-2])
+print(Sentence[:9])
+print(Sentence[0:9])
+print(Sentence[-9:-1])
+print(Sentence[2:9:3])
+print(Sentence[::3])
+print(Sentence[::-1])
 
 #Integer(whole number)
 # print(123 + 456)#output:579
