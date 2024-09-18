@@ -132,16 +132,15 @@ print(Sentence[::-1])
 # print(f'This is the result of easy calculation: {EasyCalc}. Good job!')
 
 
-Height = input("What is height of cylinder")
-Height = int(Height)
-Radius = input("What ir radius of cylinder")
-Radius = int(Radius)
-Pi = math.pi
+# Height = input("What is height of cylinder")
+# Height = int(Height)
+# Radius = input("What ir radius of cylinder")
+# Radius = int(Radius)
+# Pi = math.pi
 
-EasyCalc = 1
-EasyCalc *= Pi
-EasyCalc *= Radius ** 2
-EasyCalc *= Height
+# EasyCalc = 1
+# EasyCalc *= Pi
+# EasyCalc *= Radius ** 2
+# EasyCalc *= Height
 
-print(f'The volume of your cylinder is:{round(EasyCalc, 3)}')
-
+# print(f'The volume of your cylinder is:{round(EasyCalc, 3)}')
