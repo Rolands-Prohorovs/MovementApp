@@ -121,3 +121,9 @@
 #     print('Scissors beats Paper, you won, lucky you!')
 # else:
 #     print('Watch you grammar fool:(')
+#                           Date format check
+import random
+
+Movement = random.choice([True, False])
+
+print(Movement)
