@@ -52,6 +52,22 @@
 
 # print(Alph)
 
+FirstWord = input(':')
+SecondWord = input(':')
+Words = [FirstWord, SecondWord]
+Alph = sorted(Words)
+FirstWord = Alph[0]
+SecondWord = Alph[1]
+print(FirstWord, SecondWord)
+if FirstWord == Words[0]:
+    print('The first word "'+FirstWord+'" is before the second word "'+SecondWord+'" alphabetically.')
+
+elif SecondWord == Words[0]:
+    print('The second word "'+SecondWord+'" is before the first word "'+FirstWord+'" alphabetically.')
+
+else:
+    print('Both inserted words are the same alphabetically, "'+FirstWord+'"')
+    
 #                                RANDOM NUMBER IN ORDER
 # import random 
 # print(random.random())
@@ -67,8 +83,9 @@
 # print(Numbers)
 
 
-#                             RANDOM LETTER 
+#                               RANDOM LETTER 
 # import string
+# import random
 # Name = input('Write your name:')
 # Letter = random.choice(string.ascii_letters)
 # if Letter in Name:
@@ -122,8 +139,3 @@
 # else:
 #     print('Watch you grammar fool:(')
 #                           Date format check
-import random
-
-Movement = random.choice([True, False])
-
-print(Movement)
