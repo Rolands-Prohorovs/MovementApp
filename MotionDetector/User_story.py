@@ -1,6 +1,7 @@
 from datetime import datetime
 import sys
 import random 
+
 def exit_function():
      print('Thanks for visiting. Welcome back soon.')
      sys.exit()
