@@ -157,7 +157,7 @@ while True:
     else:
         continue
     
-print('')
+
 
 print('Possiable user rights:\n'
       '1 - Admin\n'
