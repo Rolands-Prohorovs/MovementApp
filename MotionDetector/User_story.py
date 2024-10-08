@@ -1,167 +1,223 @@
 from datetime import datetime
-import sys
 import random 
 
-def exit_function():
-     print('Thanks for visiting. Welcome back soon.')
-     sys.exit()
-
-print('Hello user, welcome to the Motion Detector! Let’s start.\n')
-
-User = {}
-
-FirstName = input('What is your first name?')
-User['name'] = FirstName
-if FirstName == 'quit':
-     exit_function()
-
-LastName = input('What is you last name?')
-User['surname'] = LastName
-if LastName == 'quit':
-     exit_function()
-
-Date = input('What is you birthday date?(in dd/mm/yyyy format)')
-User['birthday'] = Date
-if Date == 'quit':
-     exit_function()
-
-print('')
-print("Hello", FirstName, LastName,", welcome to the Motion Detector! Let's start.")
-
-print('Your username is:',FirstName[:3]+LastName[:4]+Date[6:11]+Date[3:5]+Date[0:2])
-Username = FirstName[:3]+LastName[:4]+Date[6:11]+Date[3:5]+Date[0:2]
-User['username'] = Username
-print('')
-# Movement = input('Has there been movement? Yes/No')
-
-Movement = random.choice([True, False])
-if Movement == True:
-     print('Movement detected: Yes')
-else:
-     print('Movement detected: No')
-if Movement == 'quit':
-     exit_function()
-print('')
-
-# Celsius = input('What is temperature of CPU? in °C')
-
-Celsius = random.randint(1,100)
-print('Temperature of CPU is', Celsius)
-Celsius = int(Celsius)
-Fahrenheit = (Celsius  * 9/5) + 32
-print('The given temperature ',Celsius,' is ',Fahrenheit,' F')
-print('')
-
-try:
-    birthday = datetime.strptime(Date, '%d/%m/%Y')
-except ValueError:
-    print("Incorrect format, enter date in dd/mm/yyyy format:")
-    Date = input()
-if Date == 'quit':
-     print('Thanks for visiting. Welcome back soon.')
-     sys.exit()
-
-print('')
-if User['name'] == 'Rolands':
-    print('Welcome '+User['name']+', you have admin rights.')
-    User['rights'] = 'Admin'
-elif User['name'] == 'Mira':
-    print('Welcome '+User['name']+', you have super-user rights')
-    User['rights'] = 'super-user'
-else:
-    print('Welcome '+User['name']+', you have viewer rights.')
-    User['rights'] = 'User'
-
-print('')
-
-Age = int(input('What is your age: '))
-User['age'] = Age
-if Age == 'quit':
-    exit_function()
-if Age < 18:
-    print('Greetings '+User['name']+', you are too young to operate this program')
-    print('Thanks for visiting. Welcome back soon.')
-    exit()
-
-print('')
-Temp = input('Would you like to see temperature in Celsius or Fahrenheit: ')
-if Temp == 'quit':
-     exit_function()
-if Temp == 'Celsius':
-    if Celsius < 70:
-        print('The temperature of the CPU is ',Celsius,', it is OK.')
-    elif Celsius >= 70:
-        print('The temperature of the CPU is ',Celsius,', it is TOO HOT!')
-    else:
-        print('The temperature of the CPU is ',Celsius,', it is ON FIRE!!!') 
-else:
-        if Celsius < 70:
-             print('The temperature of the CPU is ',Fahrenheit,', it is OK.')
-        elif Celsius >= 70:
-             print('The temperature of the CPU is ',Fahrenheit,', it is TOO HOT')
-        else:
-             print('The temperature of the CPU is ',Fahrenheit,', it is ON FIRE') 
-
-print('')
-
-if Movement == True:
-     print('Movement detected')
-elif Movement == False:
-     print('Movement not detected')
-else:
-     print('You did not answer if there was movement ')
-
-print('')
-
-print("Let's create password for your account!")
-
-print('')
-
-while True:
-    Capital = int(input('Enter number of capital letters: '))
-    Small = int(input('Enter number of small letters: '))
-    Number = int(input('Enter number of numbers: '))
-    Special_char = int(input('Enter number of special characters: '))
-
-    Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    Capitals = []
-    while Capital > 0:
-        Capitals += random.choice(Alphabet)
-        Capital -= 1
-
-    Small_Alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    LowerCase = []
-    while Small > 0:
-        LowerCase += random.choice(Small_Alphabet)
-        Small -= 1
-
-    AllNumbers = '123456789'
-    Numbers = []
-    while Number > 0:
-        Numbers += random.choice(AllNumbers)
-        Number -= 1
-
-    AllSpecial_Characters = '!@#$%^&*()_+=-~`;:,<.>?|'
-    Special_Characters = []
-    while Special_char > 0:
-        Special_Characters += random.choice(AllSpecial_Characters)
-        Special_char -= 1
-
-    Password = Capitals+LowerCase+Numbers+Special_Characters
-    random.shuffle(Password)
-    Password = ''.join(Password)
-    print(Password)
-
-    if input('Are you happy with your password?') != 'no':
-        break
-    else:
-        continue
+users  = [
+    {
+        'name': 'Rolands',
+        'surname': 'Prohorovs',
+        'rights': 'Admin',
+        'date': '19/07/2005', 
+        'Age': 19,
+        'username': 'RolProh20050719'
+        }
+        ]
     
 
+user = {}
+cpu = {}
 
-print('Possiable user rights:\n'
-      '1 - Admin\n'
-      '2 - Super-user\n'
-      '3 - User')
-print('Your user right:', User['rights'])
+def user_date(): 
+    user['name'] = input('What is your first name?\n')
+
+    if user['name'] == 'Rolands':
+        user['rights'] = 'Admin'
+
+    elif user['name'] == 'Mira':
+        user['rights'] = 'super-user'
+
+    else:
+        user['rights'] = 'User'
+        
+    user['surname'] = input('\nWhat is you last name?\n')
+    
+    user['birthday'] = input('\nWhat is you birthday date?(in dd/mm/yyyy format)\n')
+
+    user['age'] = int(input('\nWhat is your age: '))
+
+    while True:
+        try:
+            birthday = datetime.strptime(user['birthday'], '%d/%m/%Y')
+            break
+        except ValueError:
+            print("Incorrect format, enter date in dd/mm/yyyy format: ")
+            user['birthday'] = input()
+            continue
+
+    if user['age'] < 18:
+        print('Greetings '+user['name']+', you are too young to operate this program')
+        print('Thanks for visiting. Welcome back soon.')
+        exit()
+
+
+    print('\nWelcome '+user['name']+'.\n')
+
+    user['username']= user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
+    check_account()
+
+
+def check_account():
+    for i in users:
+            if i['username'] == user['username']:
+                print('You already have account.')
+                if input('Do you wanna make another or continue with this?(continue/another)\n') != 'continue':
+                    user_date()
+                else:
+                    continue
+            else:
+                users.append(user) 
+                print('Your username is:',user['username'],'\n')
+                break
+
+def movement_detection():
+    print('\nWas movement detected?')
+    movement = random.choice([True, False])
+    if movement == True:
+        print('Movement detected\n')
+    elif movement == False:
+        print('Movement not detected\n')
+
+
+
+def temperature_of_CPU():
+    print('What is the temperature of the CPU?')
+    cpu['celsius_temp'] = random.randint(1,100)
+
+    print('Temperature of CPU is', cpu['celsius_temp'],'°C')
+    cpu['fahrenheit_temp'] = (cpu['celsius_temp'] * 9/5) + 32
+    print('The given temperature ',cpu['celsius_temp'],'°C is ',cpu['fahrenheit_temp'],' °F\n')
+
+    cpu['choice_of_temp'] = input('Would you like to see temperature in Celsius or Fahrenheit: ')
+    if cpu['choice_of_temp'] == 'Celsius':
+        if cpu['celsius_temp'] < 70:
+            print('The temperature of the CPU is ',cpu['celsius_temp'],'°C, it is OK.')
+        elif cpu['celsius_temp'] >= 70:
+            print('The temperature of the CPU is ',cpu['celsius_temp'],'°C, it is TOO HOT!')
+        else:
+            print('The temperature of the CPU is ',cpu['celsius_temp'],'°C, it is ON FIRE!!!') 
+    else:
+            if cpu['celsius_temp'] < 70:
+                print('The temperature of the CPU is ',cpu['fahrenheit_temp'],'°F, it is OK.')
+            elif cpu['celsius_temp'] >= 70:
+                print('The temperature of the CPU is ',cpu['fahrenheit_temp'],'°F, it is TOO HOT')
+            else:
+                cpu['celsius_temp']('The temperature of the CPU is ',cpu['fahrenheit_temp'],'°F, it is ON FIRE') 
+
+
+
+def password_generator():
+    print("\nLet's create password for your account!\n")
+
+    while True:
+        Capital = int(input('Enter number of capital letters: '))
+        Small = int(input('Enter number of small letters: '))
+        Number = int(input('Enter number of numbers: '))
+        Special_char = int(input('Enter number of special characters: '))
+
+        Alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        Capitals = []
+        while Capital > 0:
+            Capitals += random.choice(Alphabet)
+            Capital -= 1
+
+        Small_Alphabet = 'abcdefghijklmnopqrstuvwxyz'
+        LowerCase = []
+        while Small > 0:
+            LowerCase += random.choice(Small_Alphabet)
+            Small -= 1
+
+        AllNumbers = '123456789'
+        Numbers = []
+        while Number > 0:
+            Numbers += random.choice(AllNumbers)
+            Number -= 1
+
+        AllSpecial_Characters = '!@#$%^&*()_+=-~`;:,<.>?|'
+        Special_Characters = []
+        while Special_char > 0:
+            Special_Characters += random.choice(AllSpecial_Characters)
+            Special_char -= 1
+
+        user['password']  = Capitals+LowerCase+Numbers+Special_Characters
+        random.shuffle(user['password'] )
+        user['password']  = ''.join(user['password'] )
+        print('Your password is "'+user['password']+'"\n')
+
+        if input('Are you happy with your password?\n') != 'no':
+            break
+        else:
+            continue
+
+
+def game():
+    print('\nLet\'s play a number guessing game!')
+    print('Rules of the game:\n'
+          'I will choose number between 1 and 100 and you will have 8 tries to guess the number.\n'
+          'I will give you hints while you try.')
+
+    program = 0
+    user = 0
+
+    while True:
+        i = 0
+        number = random.randint(1 , 100)
+        while i < 8:
+            guess = input('Your guess: ')
+            i += 1
+            if guess == 'quit':
+                break
+            guess = int(guess)
+            if guess == number:
+                print('Good job, you got it from the',i,'try\n')
+                user += 1
+                break
+            elif i == 8:
+                print ('You lost, loser.\n')
+                program  += 1
+            elif guess > number:
+                print('Try lower.\n')
+                continue
+            elif guess < number:
+                print('Try higher.\n')
+                continue
+        print('Score\n'
+            'Program:',program,'\n'
+            'User:', user,'\n')
+            
+            
+        if input('Do you wanna play another round?\n') != 'yes':
+            print('hahaha, scared of losing?')
+            break
+        else:
+            continue
+
+def main():
+    print('Hello user, welcome to the Motion Detector! Let’s start.\n')
+
+    print("First let's create an acount for you.")
+
+    user_date()
+
+    print('\nPossiable user rights:\n'
+        '1 - Admin\n'
+        '2 - Super-user\n'
+        '3 - User')
+    print('Your user right:', user['rights'])
+
+    password_generator()
+
+    movement_detection()
+
+    temperature_of_CPU()
+
+    if input('Do you wanna try to win me in the number guessing game?\n') != 'yes':
+        print('Scared of losing?')
+    else:
+        game()
+    print('Program ending.')
+
+        
+main()
+
+
+
 

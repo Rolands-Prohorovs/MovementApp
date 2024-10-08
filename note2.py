@@ -1,10 +1,14 @@
 users = []
-user = {}
-
 while True:
-    if input('Wanna continue?') == 'yes':
+    if input('Wanna continue? (yes/no) ') == 'yes':
+        user = {}  
         user['name'] = input('Insert name: ')
-        users.append(user.copy())  # Using copy() to avoid overwriting previous entries
+        
+        for i in users:
+            if i['username'] == user['username']:
+                print("Name already exists. Please enter a different name.")
+        else:
+            users.append(user)  
     else:
         break
 
