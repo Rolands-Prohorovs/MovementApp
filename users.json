@@ -1,0 +1,19 @@
+[
+    {
+        "name": "Rolands",
+        "surname": "Prohorovs",
+        "rights": "Admin",
+        "date": "19/07/2005",
+        "Age": 19,
+        "username": "RolProh20050719"
+    },
+    {
+        "name": "nIKITA",
+        "rights": "User",
+        "surname": "Kragis",
+        "birthday": "13/02/2005",
+        "age": 19,
+        "username": "nIKKrag20050213",
+        "password": "k1g3DR?&"
+    }
+]

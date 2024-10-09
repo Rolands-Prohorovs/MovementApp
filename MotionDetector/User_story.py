@@ -1,14 +1,15 @@
 from datetime import datetime
 import random 
+import json
 
 users  = [
     {
-        'name': 'Rolands',
-        'surname': 'Prohorovs',
-        'rights': 'Admin',
-        'date': '19/07/2005', 
-        'Age': 19,
-        'username': 'RolProh20050719'
+        "name": "Rolands",
+        "surname": "Prohorovs",
+        "rights": "Admin",
+        "date": "19/07/2005", 
+        "Age": 19,
+        "username": "RolProh20050719"
         }
         ]
     
@@ -54,6 +55,7 @@ def user_date():
     user['username']= user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
     check_account()
 
+    
 
 def check_account():
     for i in users:
@@ -213,6 +215,11 @@ def main():
         print('Scared of losing?')
     else:
         game()
+
+    with open("users.json", "w") as file:
+        json.dump(users, file, indent=4)
+        print("Initial data written to users.json")
+
     print('Program ending.')
 
         
