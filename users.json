@@ -1,19 +1,26 @@
 [
     {
-        "name": "Rolands",
-        "surname": "Prohorovs",
-        "rights": "Admin",
-        "date": "19/07/2005",
-        "Age": 19,
-        "username": "RolProh20050719"
-    },
-    {
-        "name": "nIKITA",
+        "name": "Danila",
         "rights": "User",
         "surname": "Kragis",
         "birthday": "13/02/2005",
         "age": 19,
-        "username": "nIKKrag20050213",
-        "password": "k1g3DR?&"
+        "username": "DanKrag20050213"
+    },
+    {
+        "name": "Rolands",
+        "rights": "Admin",
+        "surname": "Prohorovs",
+        "birthday": "19/07/2005",
+        "age": 19,
+        "username": "RolProh20050719"
+    },
+    {
+        "name": "Elza",
+        "rights": "User",
+        "surname": "Ignate",
+        "birthday": "24/08/2006",
+        "age": 18,
+        "username": "ElzIgna20060824"
     }
 ]
