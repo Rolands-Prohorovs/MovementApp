@@ -1,11 +1,13 @@
 from datetime import datetime
 import random 
-import json
+import json 
 import requests
+import pytz
+
 
 
 def user_date(user): 
-    print('\nThen lets make you one!\n')
+    
     user['name'] = input('What is your first name?\n')
 
     user['surname'] = input('\nWhat is you last name?\n')
@@ -16,15 +18,48 @@ def user_date(user):
 
     return
 
-def account_checker(username_guess, password_guess, users):
-    for i in users:
-        if i['username'] == username_guess and i['password'] == password_guess:
-            print('Logged in.')
-            return i
-        else:
-            continue 
-    print('There are now such account. Lets create new one.')        
+def new_account(users):
+    user = {}
+    user_date(user)
+    username_maker(users, user)
+    check_for_duplicate(users, user)
+    if user == None:
+        account_checker(users)
+    else:
+        print('Welcome '+user['name']+'.\n')
+        age_verif(user)
+        date_format(user)
+        
+        right_pick(user)
+        password_generator(user)
+        return user
 
+def check_for_duplicate(users, user):
+    for i in users:
+        if i['username'] == user['username']:
+            print('You already have account.')
+            user = i
+            return user
+        else:
+            continue
+    return None
+
+def account_checker(users):
+    user = {}
+    user['username'] = input('Username:\n')
+    user['password'] = input('Password:\n')
+    for i in users:
+        if i['username'] == user['username'] and i['password'] == user['password']:
+            print('Logged in.')
+            user = i
+            return user
+        else:
+            continue
+    print('Incorrect.')
+    print('\nLets make you new one!\n')
+    user = {}
+    new_account(user)
+           
 def username_maker(users, user):
     user['username'] = user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
     print('Your username is:',user['username'],'\n')
@@ -79,10 +114,23 @@ def thingspeak():
     cpu['time'] = time_value
     return cpu
 
+def convert_to_finnish_time(cpu):
+    utc_time_str = cpu['time']
+    finnish_tz = pytz.timezone('Europe/Helsinki')
+    # Parse the UTC time string to a datetime object
+    utc_time = datetime.strptime(utc_time_str, "%Y-%m-%dT%H:%M:%SZ")
+    # Set the timezone to UTC
+    utc_time = utc_time.replace(tzinfo=pytz.utc)
+    # Convert to Finnish time
+    finnish_time = utc_time.astimezone(finnish_tz)
+    # Format the datetime object to the desired format
+    cpu['time'] = finnish_time.strftime("%d.%m.%Y, %H:%M")
+    print('At',cpu['time'])
+       
 def movement_detection(cpu):
-    if cpu['movement'] == 1:
+    if cpu['movement'] == '1':
         print('Movement detected.\n')
-    elif cpu['movement'] == 0:
+    else:
         print('Movement was not detected.\n')
 
 def temperature_of_CPU(cpu):
@@ -192,6 +240,7 @@ def game():
             continue
 
 def main():
+    
     users  = []
 
     with open("users.json", "r") as file:
@@ -200,23 +249,21 @@ def main():
     print('Hello user, welcome to the Motion Detector! Let’s start.\n')
 
     if input("Do you have an account?\n") != 'yes':
-        user = {}
-        user_date(user)
-        print('Welcome '+user['name']+'.\n')
-        age_verif(user)
-        date_format(user)
-        username_maker(users, user)
-        right_pick(user)
-        password_generator(user)
+        print('\nThen lets make you one!\n')
+        user = new_account(users)
     else:
-        username_guess = input('Username:\n')
-        password_guess = input('Password:\n')
-        i = account_checker(username_guess, password_guess, users)
-        user = i
+        user = account_checker(users)
         print('Welcome '+user['name']+'.\n')
+
+
     cpu = thingspeak()
+    convert_to_finnish_time(cpu)
     movement_detection(cpu)
     temperature_of_CPU(cpu)
+
+    with open("cpu.json", "w") as file:
+        json.dump(cpu, file, indent=4)
+        print ("Updated data written to cpu.json")
 
     if input('Do you wanna try to win me in the number guessing game?\n') != 'yes':
         print('Scared of losing?')
@@ -228,7 +275,6 @@ def main():
         print ("Updated data written to users.json")
 
     print('Program ending.')
-    print(users)
 
 main()
 

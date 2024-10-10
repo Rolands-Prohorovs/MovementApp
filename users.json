@@ -34,5 +34,23 @@
         "username": "RenProh19800823",
         "rights": "User",
         "password": "r3|-Qe6L"
+    },
+    {
+        "name": "Rolands",
+        "surname": "Prohorovs",
+        "birthday": "19/07/2005",
+        "age": 19,
+        "username": "RolProh20050719",
+        "rights": "Admin",
+        "password": "O4K8_e>m"
+    },
+    {
+        "name": "Mira",
+        "surname": "Vorne",
+        "birthday": "24/09/1990",
+        "age": 34,
+        "username": "MirVorn19900924",
+        "rights": "super-user",
+        "password": "JphK<fM957>@"
     }
 ]
