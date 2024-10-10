@@ -52,5 +52,23 @@
         "username": "MirVorn19900924",
         "rights": "super-user",
         "password": "JphK<fM957>@"
+    },
+    {
+        "name": "Danik",
+        "surname": "Kragis",
+        "birthday": "13/02/2005",
+        "age": 19,
+        "username": "DanKrag20050213",
+        "rights": "User",
+        "password": "D8e1M%"
+    },
+    {
+        "name": "Danik",
+        "surname": "Kragis",
+        "birthday": "13/02/2006",
+        "age": 19,
+        "username": "DanKrag20060213",
+        "rights": "User",
+        "password": "12mUNi;("
     }
 ]

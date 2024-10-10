@@ -4,9 +4,7 @@ import json
 import requests
 import pytz
 
-
-
-def user_date(user): 
+def user_date(user) -> None: 
     
     user['name'] = input('What is your first name?\n')
 
@@ -16,9 +14,9 @@ def user_date(user):
 
     user['age'] = int(input('\nWhat is your age: '))
 
-    return
+    return None
 
-def new_account(users):
+def new_account(users) -> dict:
     user = {}
     user_date(user)
     username_maker(users, user)
@@ -34,17 +32,15 @@ def new_account(users):
         password_generator(user)
         return user
 
-def check_for_duplicate(users, user):
+def check_for_duplicate(users, user) -> dict:
     for i in users:
         if i['username'] == user['username']:
             print('You already have account.')
             user = i
             return user
-        else:
-            continue
     return None
 
-def account_checker(users):
+def account_checker(users) -> dict:
     user = {}
     user['username'] = input('Username:\n')
     user['password'] = input('Password:\n')
@@ -60,12 +56,13 @@ def account_checker(users):
     user = {}
     new_account(user)
            
-def username_maker(users, user):
+def username_maker(users, user) -> dict:
     user['username'] = user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
     print('Your username is:',user['username'],'\n')
     users.append(user)
+    return users
 
-def right_pick(user):
+def right_pick(user) -> None:
     if user['name'] == 'Rolands':
         user['rights'] = 'Admin'
 
@@ -80,8 +77,9 @@ def right_pick(user):
         '2 - Super-user\n'
         '3 - User')
     print('Your user right:', user['rights'])
+    return None
 
-def date_format(user):
+def date_format(user) -> None:
     while True:
             try:
                 birthday = datetime.strptime(user['birthday'], '%d/%m/%Y')
@@ -90,14 +88,16 @@ def date_format(user):
                 print("Incorrect format, enter date in dd/mm/yyyy format: ")
                 user['birthday'] = input()
                 continue
+    return None
 
-def age_verif(user):
+def age_verif(user) -> None:
     if user['age'] < 18:
         print('Greetings '+user['name']+', you are too young to operate this program')
         print('Thanks for visiting. Welcome back soon.')
         exit()
+    return None
 
-def thingspeak():
+def thingspeak() -> str:
     cpu = {}
     url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=1"
     response = requests.get(url)
@@ -110,31 +110,33 @@ def thingspeak():
 
     cpu['movement'] = movement_value
     cpu['temperature_celsius'] = float(temp_value)
-    cpu['temperature_fahrenheit'] = float((float(temp_value) * 9 / 5) + 35) 
+    cpu['temperature_fahrenheit'] = float((float(temp_value) * 9 / 5) + 32) 
     cpu['time'] = time_value
     return cpu
 
-def convert_to_finnish_time(cpu):
+def convert_to_finnish_time(cpu) -> None:
     utc_time_str = cpu['time']
     finnish_tz = pytz.timezone('Europe/Helsinki')
-    # Parse the UTC time string to a datetime object
+    
     utc_time = datetime.strptime(utc_time_str, "%Y-%m-%dT%H:%M:%SZ")
-    # Set the timezone to UTC
+   
     utc_time = utc_time.replace(tzinfo=pytz.utc)
-    # Convert to Finnish time
+   
     finnish_time = utc_time.astimezone(finnish_tz)
-    # Format the datetime object to the desired format
+    
     cpu['time'] = finnish_time.strftime("%d.%m.%Y, %H:%M")
     print('At',cpu['time'])
+    return None
        
-def movement_detection(cpu):
+def movement_detection(cpu) -> None:
     if cpu['movement'] == '1':
         print('Movement detected.\n')
     else:
         print('Movement was not detected.\n')
+    return None
 
-def temperature_of_CPU(cpu):
-    
+def temperature_of_CPU(cpu) -> None:
+
     print('Temperature of CPU is', cpu['temperature_celsius'],'°C')
     print('The given temperature ',cpu['temperature_celsius'],'°C is ',cpu['temperature_fahrenheit'],' °F\n')
 
@@ -152,9 +154,11 @@ def temperature_of_CPU(cpu):
             elif cpu['temperature_celsius'] >= 70:
                 print('The temperature of the CPU is ',cpu['temperature_fahrenheit'],'°F, it is TOO HOT')
             else:
-                cpu['temperature_celsius']('The temperature of the CPU is ',cpu['temperature_fahrenheit'],'°F, it is ON FIRE') 
+                print('The temperature of the CPU is ',cpu['temperature_fahrenheit'],'°F, it is ON FIRE')
 
-def password_generator(user):
+    return None 
+
+def password_generator(user) -> None:
     print("\nLet's create password for your account!\n")
 
     while True:
@@ -197,7 +201,9 @@ def password_generator(user):
         else:
             continue
 
-def game():
+    return None 
+
+def game() -> None:
     print('\nLet\'s play a number guessing game!')
     print('Rules of the game:\n'
           'I will choose number between 1 and 100 and you will have 8 tries to guess the number.\n'
@@ -238,8 +244,9 @@ def game():
             break
         else:
             continue
+    return None
 
-def main():
+def main() -> None:
     
     users  = []
 
@@ -275,12 +282,8 @@ def main():
         print ("Updated data written to users.json")
 
     print('Program ending.')
+    return None
 
 main()
-
-# [{'name': 'Rolands', 'surname': 'Prohorovs', 'birthday': '19/07/2005', 'age': 19, 'username': 'RolProh20050719', 'rights': 'Admin', 'password': 'b7p$4PP|'}, 
-# {'name': 'Zanna', 'surname': 'Prohorova', 'birthday': '22/09/1974', 'age': 50, 'username': 'ZanProh19740922', 'rights': 'User', 'password': '@2R1O_wv'},
-# {'name': 'Elza', 'surname': 'Ignate', 'birthday': '24/08/2006', 'age': 18, 'username': 'ElzIgna20060824', 'rights': 'User', 'password': 'FX$36(nu'}, 
-# {'name': 'Renars', 'surname': 'Prohorovs', 'birthday': '23/08/1980', 'age': 44, 'username': 'RenProh19800823', 'rights': 'User', 'password': 'r3|-Qe6L'}]
 
 
