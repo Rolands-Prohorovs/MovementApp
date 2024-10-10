@@ -1,10 +1,36 @@
 from datetime import datetime
 import random 
 import json
+import requests
 
-def user_date(users, user): 
+
+def user_date(user): 
+    print('\nThen lets make you one!\n')
     user['name'] = input('What is your first name?\n')
 
+    user['surname'] = input('\nWhat is you last name?\n')
+    
+    user['birthday'] = input('\nWhat is you birthday date?(in dd/mm/yyyy format)\n')
+
+    user['age'] = int(input('\nWhat is your age: '))
+
+    return
+
+def account_checker(username_guess, password_guess, users):
+    for i in users:
+        if i['username'] == username_guess and i['password'] == password_guess:
+            print('Logged in.')
+            return i
+        else:
+            continue 
+    print('There are now such account. Lets create new one.')        
+
+def username_maker(users, user):
+    user['username'] = user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
+    print('Your username is:',user['username'],'\n')
+    users.append(user)
+
+def right_pick(user):
     if user['name'] == 'Rolands':
         user['rights'] = 'Admin'
 
@@ -13,11 +39,14 @@ def user_date(users, user):
 
     else:
         user['rights'] = 'User'
-        
-    user['surname'] = input('\nWhat is you last name?\n')
-    
-    user['birthday'] = input('\nWhat is you birthday date?(in dd/mm/yyyy format)\n')
-    
+
+    print('\nPossiable user rights:\n'
+        '1 - Admin\n'
+        '2 - Super-user\n'
+        '3 - User')
+    print('Your user right:', user['rights'])
+
+def date_format(user):
     while True:
             try:
                 birthday = datetime.strptime(user['birthday'], '%d/%m/%Y')
@@ -27,74 +56,55 @@ def user_date(users, user):
                 user['birthday'] = input()
                 continue
 
-    user['age'] = int(input('\nWhat is your age: '))
-
-    
+def age_verif(user):
     if user['age'] < 18:
         print('Greetings '+user['name']+', you are too young to operate this program')
         print('Thanks for visiting. Welcome back soon.')
         exit()
 
-
-    print('\nWelcome '+user['name']+'.\n')
-
-    user['username'] = user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
-    print(user['username'])
-    
-    for i in users:
-            if "username" in i and i["username"] == user["username"]:
-                print('You already have account.')
-                if input('Do you wanna make another or continue with this?(continue/another)\n') != 'continue':
-                    return user_date(users, user)
-                else:
-                    print('Continue with existing account.')
-                    return
-    
-    print('Your username is:',user['username'],'\n')
-    users.append(user)
-    return
-    # check_account(users, user)
-
-    
-# def check_account(users, user):
-    
-
-def movement_detection():
-    print('\nWas movement detected?')
-    movement = random.choice([True, False])
-    if movement == True:
-        print('Movement detected\n')
-    elif movement == False:
-        print('Movement not detected\n')
-
-
-
-def temperature_of_CPU():
+def thingspeak():
     cpu = {}
-    print('What is the temperature of the CPU?')
-    cpu['celsius_temp'] = random.randint(1,100)
+    url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=1"
+    response = requests.get(url)
+    data = response.json()
 
-    print('Temperature of CPU is', cpu['celsius_temp'],'°C')
-    cpu['fahrenheit_temp'] = (cpu['celsius_temp'] * 9/5) + 32
-    print('The given temperature ',cpu['celsius_temp'],'°C is ',cpu['fahrenheit_temp'],' °F\n')
+    for entry in data["feeds"]:
+        movement_value = entry["field1"]
+        temp_value = entry["field2"]
+        time_value = entry["created_at"]
+
+    cpu['movement'] = movement_value
+    cpu['temperature_celsius'] = float(temp_value)
+    cpu['temperature_fahrenheit'] = float((float(temp_value) * 9 / 5) + 35) 
+    cpu['time'] = time_value
+    return cpu
+
+def movement_detection(cpu):
+    if cpu['movement'] == 1:
+        print('Movement detected.\n')
+    elif cpu['movement'] == 0:
+        print('Movement was not detected.\n')
+
+def temperature_of_CPU(cpu):
+    
+    print('Temperature of CPU is', cpu['temperature_celsius'],'°C')
+    print('The given temperature ',cpu['temperature_celsius'],'°C is ',cpu['temperature_fahrenheit'],' °F\n')
 
     cpu['choice_of_temp'] = input('Would you like to see temperature in Celsius or Fahrenheit: ')
     if cpu['choice_of_temp'] == 'Celsius':
-        if cpu['celsius_temp'] < 70:
-            print('The temperature of the CPU is ',cpu['celsius_temp'],'°C, it is OK.')
-        elif cpu['celsius_temp'] >= 70:
-            print('The temperature of the CPU is ',cpu['celsius_temp'],'°C, it is TOO HOT!')
+        if cpu['temperature_celsius'] < 70:
+            print('The temperature of the CPU is ',cpu['temperature_celsius'],'°C, it is OK.')
+        elif cpu['temperature_celsius'] >= 70:
+            print('The temperature of the CPU is ',cpu['temperature_celsius'],'°C, it is TOO HOT!')
         else:
-            print('The temperature of the CPU is ',cpu['celsius_temp'],'°C, it is ON FIRE!!!') 
+            print('The temperature of the CPU is ',cpu['temperature_celsius'],'°C, it is ON FIRE!!!') 
     else:
-            if cpu['celsius_temp'] < 70:
-                print('The temperature of the CPU is ',cpu['fahrenheit_temp'],'°F, it is OK.')
-            elif cpu['celsius_temp'] >= 70:
-                print('The temperature of the CPU is ',cpu['fahrenheit_temp'],'°F, it is TOO HOT')
+            if cpu['temperature_celsius'] < 70:
+                print('The temperature of the CPU is ',cpu['temperature_fahrenheit'],'°F, it is OK.')
+            elif cpu['temperature_celsius'] >= 70:
+                print('The temperature of the CPU is ',cpu['temperature_fahrenheit'],'°F, it is TOO HOT')
             else:
-                cpu['celsius_temp']('The temperature of the CPU is ',cpu['fahrenheit_temp'],'°F, it is ON FIRE') 
-
-
+                cpu['temperature_celsius']('The temperature of the CPU is ',cpu['temperature_fahrenheit'],'°F, it is ON FIRE') 
 
 def password_generator(user):
     print("\nLet's create password for your account!\n")
@@ -138,7 +148,6 @@ def password_generator(user):
             break
         else:
             continue
-
 
 def game():
     print('\nLet\'s play a number guessing game!')
@@ -184,40 +193,48 @@ def game():
 
 def main():
     users  = []
-    user = {}
-    print('Hello user, welcome to the Motion Detector! Let’s start.\n')
 
-    print("First let's create an acount for you.")
-
-    
     with open("users.json", "r") as file:
         users = json.load(file)
 
-    user_date(users, user)
+    print('Hello user, welcome to the Motion Detector! Let’s start.\n')
 
-    with open("users.json", "w") as file:
-        json.dump(users, file, indent=4)
-        print ("Updated data written to users.json")
-
-    print('\nPossiable user rights:\n'
-        '1 - Admin\n'
-        '2 - Super-user\n'
-        '3 - User')
-    print('Your user right:', user['rights'])
-
-    password_generator(user)
-    movement_detection()
-    temperature_of_CPU()
+    if input("Do you have an account?\n") != 'yes':
+        user = {}
+        user_date(user)
+        print('Welcome '+user['name']+'.\n')
+        age_verif(user)
+        date_format(user)
+        username_maker(users, user)
+        right_pick(user)
+        password_generator(user)
+    else:
+        username_guess = input('Username:\n')
+        password_guess = input('Password:\n')
+        i = account_checker(username_guess, password_guess, users)
+        user = i
+        print('Welcome '+user['name']+'.\n')
+    cpu = thingspeak()
+    movement_detection(cpu)
+    temperature_of_CPU(cpu)
 
     if input('Do you wanna try to win me in the number guessing game?\n') != 'yes':
         print('Scared of losing?')
     else:
         game()
 
+    with open("users.json", "w") as file:
+        json.dump(users, file, indent=4)
+        print ("Updated data written to users.json")
+
     print('Program ending.')
+    print(users)
 
 main()
 
-
+# [{'name': 'Rolands', 'surname': 'Prohorovs', 'birthday': '19/07/2005', 'age': 19, 'username': 'RolProh20050719', 'rights': 'Admin', 'password': 'b7p$4PP|'}, 
+# {'name': 'Zanna', 'surname': 'Prohorova', 'birthday': '22/09/1974', 'age': 50, 'username': 'ZanProh19740922', 'rights': 'User', 'password': '@2R1O_wv'},
+# {'name': 'Elza', 'surname': 'Ignate', 'birthday': '24/08/2006', 'age': 18, 'username': 'ElzIgna20060824', 'rights': 'User', 'password': 'FX$36(nu'}, 
+# {'name': 'Renars', 'surname': 'Prohorovs', 'birthday': '23/08/1980', 'age': 44, 'username': 'RenProh19800823', 'rights': 'User', 'password': 'r3|-Qe6L'}]
 
 

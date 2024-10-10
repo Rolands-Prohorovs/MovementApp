@@ -1,26 +1,38 @@
 [
     {
-        "name": "Danila",
-        "rights": "User",
-        "surname": "Kragis",
-        "birthday": "13/02/2005",
-        "age": 19,
-        "username": "DanKrag20050213"
-    },
-    {
         "name": "Rolands",
-        "rights": "Admin",
         "surname": "Prohorovs",
         "birthday": "19/07/2005",
         "age": 19,
-        "username": "RolProh20050719"
+        "username": "RolProh20050719",
+        "rights": "Admin",
+        "password": "b7p$4PP|"
+    },
+    {
+        "name": "Zanna",
+        "surname": "Prohorova",
+        "birthday": "22/09/1974",
+        "age": 50,
+        "username": "ZanProh19740922",
+        "rights": "User",
+        "password": "@2R1O_wv"
     },
     {
         "name": "Elza",
-        "rights": "User",
         "surname": "Ignate",
         "birthday": "24/08/2006",
         "age": 18,
-        "username": "ElzIgna20060824"
+        "username": "ElzIgna20060824",
+        "rights": "User",
+        "password": "FX$36(nu"
+    },
+    {
+        "name": "Renars",
+        "surname": "Prohorovs",
+        "birthday": "23/08/1980",
+        "age": 44,
+        "username": "RenProh19800823",
+        "rights": "User",
+        "password": "r3|-Qe6L"
     }
 ]
