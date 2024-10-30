@@ -1,56 +1,29 @@
 [
     {
+        "name": "",
+        "surname": "",
+        "birthday": "",
+        "age": "",
+        "username": "",
+        "rights": "",
+        "password": ""
+    },
+    {
         "name": "Rolands",
         "surname": "Prohorovs",
         "birthday": "19/07/2005",
         "age": 19,
         "username": "RolProh20050719",
         "rights": "Admin",
-        "password": "b7p$4PP|"
-    },
-    {
-        "name": "Zanna",
-        "surname": "Prohorova",
-        "birthday": "22/09/1974",
-        "age": 50,
-        "username": "ZanProh19740922",
-        "rights": "User",
-        "password": "@2R1O_wv"
-    },
-    {
-        "name": "Elza",
-        "surname": "Ignate",
-        "birthday": "24/08/2006",
-        "age": 18,
-        "username": "ElzIgna20060824",
-        "rights": "User",
-        "password": "FX$36(nu"
-    },
-    {
-        "name": "Renars",
-        "surname": "Prohorovs",
-        "birthday": "23/08/1980",
-        "age": 44,
-        "username": "RenProh19800823",
-        "rights": "User",
-        "password": "r3|-Qe6L"
+        "password": "3@Qx"
     },
     {
         "name": "Mira",
         "surname": "Vorne",
-        "birthday": "24/09/1990",
+        "birthday": "12/12/1990",
         "age": 34,
-        "username": "MirVorn19900924",
+        "username": "MirVorn19901212",
         "rights": "super-user",
-        "password": "JphK<fM957>@"
-    },
-    {
-        "name": "Roberts",
-        "surname": "Prohorovs",
-        "birthday": "04/10/2005",
-        "age": 21,
-        "username": "RobProh20051004",
-        "rights": "User",
-        "password": "7hO.T"
+        "password": "J"
     }
 ]

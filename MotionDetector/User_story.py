@@ -3,10 +3,12 @@ import random
 import json 
 import requests
 import pytz
-
+import pandas as pd
+import requests
+import pandas as pd
+import matplotlib.pyplot as plt
 
 def user_date(user) -> None: 
-    
     user['name'] = input('What is your first name?\n')
 
     user['surname'] = input('\nWhat is you last name?\n')
@@ -39,24 +41,20 @@ def check_for_duplicate(users, user) -> dict:
             print('You already have account.')
             user = i
             return user
-    return None
+        else:
+            return
 
 def account_checker(users) -> dict:
-    user = {}
+    user = {}    
     user['username'] = input('Username:\n')
     user['password'] = input('Password:\n')
     for i in users:
         if i['username'] == user['username'] and i['password'] == user['password']:
             print('Logged in.')
-            user = i
-            return user
-        else:
-            continue
-    print('Incorrect.')
-    print('\nLets make you new one!\n')
-    user = {}
-    new_account(user)
-           
+            return i
+    print('Incorrect username or password.')
+    return None
+
 def username_maker(users, user) -> dict:
     user['username'] = user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
     print('Your username is:',user['username'],'\n')
@@ -99,69 +97,42 @@ def age_verif(user) -> None:
     return None
 
 def thingspeak() -> str:
-    # cpu = {}
-    # url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=10&timezone=Europe/Helsinki"
-    # response = requests.get(url)
-    # data = response.json()
-
-    # for entry in data["feeds"]:
-    #     movement_value = entry["field1"]
-    #     temp_value = entry["field2"]
-    #     time_value = entry["created_at"]
-
-    # cpu['movement'] = movement_value
-    # cpu['temperature_celsius'] = float(temp_value)
-    # cpu['temperature_fahrenheit'] = float((float(temp_value) * 9 / 5) + 32) 
-    # cpu['time'] = time_value
-    import pandas as pd
-    import requests
-
-# List to store each entry's data
     cpu_data = []
+
     url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=20&timezone=Europe/Helsinki"
     response = requests.get(url)
     data = response.json()
-
-    # Loop through each entry and append data to list
+    
     for entry in data["feeds"]:
         movement_value = entry["field1"]
         temp_value = entry["field2"]
         time_value = entry["created_at"]
-        
-        # Convert and structure data for each row
+    
         cpu = {
             'movement': movement_value,
             'temperature_celsius': float(temp_value),
             'temperature_fahrenheit': float((float(temp_value) * 9 / 5) + 32),
             'time': time_value
         }
-        with open("cpu.json", "w") as file:
-                json.dump(cpu_data, file, indent=4)
-                print ("Updated data written to cpu.json")
-        
-        # Append row to the list
+
+        cpu['time'] = convert_time(cpu)
         cpu_data.append(cpu)
 
-    # Create DataFrame from list of dictionaries
-    df = pd.DataFrame(cpu_data)
-    print("Pandas DataFrame:")
-    print(df)
-    
-    return cpu
+    with open("cpu.json", "w") as file:
+        json.dump(cpu_data, file, indent=4)
+        print ("Data is requested and saved to cpu.json")
 
-def convert_to_finnish_time(cpu) -> None:
-    utc_time_str = cpu['time']
-    finnish_tz = pytz.timezone('Europe/Helsinki')
-    
-    utc_time = datetime.strptime(utc_time_str, "%Y-%m-%dT%H:%M:%SZ")
-   
-    utc_time = utc_time.replace(tzinfo=pytz.utc)
-   
-    finnish_time = utc_time.astimezone(finnish_tz)
-    
-    cpu['time'] = finnish_time.strftime("%d.%m.%Y, %H:%M")
-    print('At',cpu['time'])
-    return None
+    return cpu_data
+
+def convert_time(cpu) -> None:
+    date = cpu['time'][0: 10]
+    clock = cpu['time'][11: 19]
+    date = list(date)
+    date[4] = '/'
+    date[7] = '/'
+    cpu['time'] = ''.join(date)
+    cpu['time'] = cpu['time'] +  ' ' + clock
+    return cpu['time']
        
 def movement_detection(cpu) -> None:
     if cpu['movement'] == '1':
@@ -171,7 +142,6 @@ def movement_detection(cpu) -> None:
     return None
 
 def temperature_of_CPU(cpu) -> None:
-
     print('Temperature of CPU is', cpu['temperature_celsius'],'°C')
     print('The given temperature ',cpu['temperature_celsius'],'°C is ',cpu['temperature_fahrenheit'],' °F\n')
 
@@ -281,11 +251,43 @@ def game() -> None:
             continue
     return None
 
+def information_table(cpu_data) -> None:
+    df = pd.DataFrame(cpu_data)
+    print(df)
+    return None
+    
+def information_chart(cpu_data) -> None:
+    df = pd.DataFrame(cpu_data)
+    plt.figure(figsize=(10, 5))
+    plt.plot(df['movement'], label='Movement')
+    plt.plot(df['temperature_celsius'], label='Temperature')
+    plt.xlabel('Time')
+    plt.ylabel('Values')
+    plt.title('Temperature and Movement Over Time')
+    plt.legend()
+    plt.show()
+    return None
+
+def information_bar_chart(cpu_data) -> None:
+
+    return None
+
+def account_information(user) -> None:
+    print('\n***Account details***')
+    print('Name:', user['name'])
+    print('Surname:', user['surname'])
+    print('Birthday:',user['birthday'])
+    print('Age:', user['age'])
+    print('Username:', user['username'])
+    print('Password:', user['password'])
+
+    return None
+
 def main() -> None:
     users  = []
+
     with open("users.json", "r") as file:
         users = json.load(file)
-    thingspeak()
 
     print('Hello user, welcome to the Motion Detector! Let’s start.\n')
 
@@ -293,7 +295,6 @@ def main() -> None:
     print("2. Log in")
     
     if input("Your choice: ") != '1':
-        print('\nThen lets make you one!\n')
         user = new_account(users)
     else:
         user = account_checker(users)
@@ -301,28 +302,52 @@ def main() -> None:
 
     with open("users.json", "w") as file:
         json.dump(users, file, indent=4)
-        print ("Updated data written to users.json")
+        print ("Your account is saved to users.json")
     
-    cpu = thingspeak()
     while True:
-        print("\nMenu:")
-        print("1. Movement detection.")
-        print("2. Temperature of CPU")
-        print("3. Number guessing game")
-        print("4. Exit")
+        print("\nMenu")
+        print("1. Make a request for data of the CPU.")
+        print("2. Information about CPU.")
+        print("3. Number guessing game.")
+        print('4. Acount information.')
+        print("5. Exit")
 
         choice = input('Your choice: ')
-
         if choice == '1':
-            movement_detection(cpu)
-            
+            cpu_data = thingspeak()
         elif choice == '2':
-            temperature_of_CPU(cpu)
+            while True:
+                print('\nMenu:')
+                print('1. Show information in the table.')
+                print('2. Show information in the chart.')
+                print('3. Show onformation in the bar chart.')
+                print('4. Exit.')
+                choice2 = input('Your choice: ')
+                if choice2 == '1':
+                    information_table(cpu_data)
+                    
+                elif choice2 == '2':
+                    information_chart(cpu_data)
+                    
+                elif choice2 == '3':
+                    information_bar_chart(cpu_data)
+                    
+                elif choice2 == '4':
+                    break
+                else:
+                    print('Please enters 1, 2 or 3.')
+                    continue
+
         elif choice == '3':
             game()
         elif choice == '4':
-            print('Program ending.')
+            account_information(user)
+        elif choice == '5':
+            print('Program ending...')
             break
+        else:
+            print('Please enters 1, 2, 3 or 4.')
+            continue
     return None
 main()
 

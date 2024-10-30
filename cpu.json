@@ -3,114 +3,120 @@
         "movement": "0",
         "temperature_celsius": 44.8,
         "temperature_fahrenheit": 112.64,
-        "time": "2024-06-15T22:13:27+03:00"
+        "time": "2024/06/15 22:13:27"
     },
     {
         "movement": "0",
         "temperature_celsius": 46.2,
         "temperature_fahrenheit": 115.16,
-        "time": "2024-06-15T22:13:43+03:00"
+        "time": "2024/06/15 22:13:43"
     },
     {
         "movement": "0",
         "temperature_celsius": 45.7,
         "temperature_fahrenheit": 114.26,
-        "time": "2024-06-15T22:14:00+03:00"
+        "time": "2024/06/15 22:14:00"
     },
     {
         "movement": "0",
         "temperature_celsius": 46.2,
         "temperature_fahrenheit": 115.16,
-        "time": "2024-06-15T22:14:17+03:00"
+        "time": "2024/06/15 22:14:17"
     },
     {
         "movement": "0",
         "temperature_celsius": 42.3,
         "temperature_fahrenheit": 108.14,
-        "time": "2024-06-17T14:06:30+03:00"
+        "time": "2024/06/17 14:06:30"
     },
     {
         "movement": "1",
         "temperature_celsius": 44.8,
         "temperature_fahrenheit": 112.64,
-        "time": "2024-06-17T14:06:47+03:00"
+        "time": "2024/06/17 14:06:47"
     },
     {
         "movement": "1",
         "temperature_celsius": 44.8,
         "temperature_fahrenheit": 112.64,
-        "time": "2024-06-25T22:20:24+03:00"
+        "time": "2024/06/25 22:20:24"
     },
     {
         "movement": "1",
         "temperature_celsius": 44.3,
         "temperature_fahrenheit": 111.74,
-        "time": "2024-06-25T22:20:40+03:00"
+        "time": "2024/06/25 22:20:40"
     },
     {
         "movement": "1",
         "temperature_celsius": 50.6,
         "temperature_fahrenheit": 123.08000000000001,
-        "time": "2024-09-30T11:26:27+03:00"
+        "time": "2024/09/30 11:26:27"
     },
     {
         "movement": "1",
         "temperature_celsius": 48.2,
         "temperature_fahrenheit": 118.76,
-        "time": "2024-09-30T11:26:44+03:00"
+        "time": "2024/09/30 11:26:44"
     },
     {
         "movement": "1",
         "temperature_celsius": 50.1,
         "temperature_fahrenheit": 122.18,
-        "time": "2024-09-30T11:27:00+03:00"
+        "time": "2024/09/30 11:27:00"
     },
     {
         "movement": "1",
         "temperature_celsius": 49.6,
         "temperature_fahrenheit": 121.28,
-        "time": "2024-09-30T11:27:17+03:00"
+        "time": "2024/09/30 11:27:17"
     },
     {
         "movement": "1",
         "temperature_celsius": 48.7,
         "temperature_fahrenheit": 119.66,
-        "time": "2024-09-30T11:27:34+03:00"
+        "time": "2024/09/30 11:27:34"
     },
     {
         "movement": "1",
         "temperature_celsius": 49.1,
         "temperature_fahrenheit": 120.38000000000001,
-        "time": "2024-09-30T11:27:51+03:00"
+        "time": "2024/09/30 11:27:51"
     },
     {
         "movement": "1",
         "temperature_celsius": 48.2,
         "temperature_fahrenheit": 118.76,
-        "time": "2024-09-30T11:28:08+03:00"
+        "time": "2024/09/30 11:28:08"
     },
     {
         "movement": "1",
         "temperature_celsius": 48.7,
         "temperature_fahrenheit": 119.66,
-        "time": "2024-09-30T11:28:25+03:00"
+        "time": "2024/09/30 11:28:25"
     },
     {
         "movement": "1",
         "temperature_celsius": 49.1,
         "temperature_fahrenheit": 120.38000000000001,
-        "time": "2024-09-30T11:28:41+03:00"
+        "time": "2024/09/30 11:28:41"
     },
     {
         "movement": "1",
         "temperature_celsius": 48.7,
         "temperature_fahrenheit": 119.66,
-        "time": "2024-09-30T11:28:58+03:00"
+        "time": "2024/09/30 11:28:58"
     },
     {
         "movement": "1",
         "temperature_celsius": 48.2,
         "temperature_fahrenheit": 118.76,
-        "time": "2024-09-30T11:29:15+03:00"
+        "time": "2024/09/30 11:29:15"
+    },
+    {
+        "movement": "1",
+        "temperature_celsius": 48.7,
+        "temperature_fahrenheit": 119.66,
+        "time": "2024/09/30 11:29:32"
     }
 ]
