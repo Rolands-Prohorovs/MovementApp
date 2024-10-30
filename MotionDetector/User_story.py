@@ -4,6 +4,7 @@ import json
 import requests
 import pytz
 
+
 def user_date(user) -> None: 
     
     user['name'] = input('What is your first name?\n')
@@ -98,20 +99,54 @@ def age_verif(user) -> None:
     return None
 
 def thingspeak() -> str:
-    cpu = {}
-    url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=10&timezone=Europe/Helsinki"
+    # cpu = {}
+    # url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=10&timezone=Europe/Helsinki"
+    # response = requests.get(url)
+    # data = response.json()
+
+    # for entry in data["feeds"]:
+    #     movement_value = entry["field1"]
+    #     temp_value = entry["field2"]
+    #     time_value = entry["created_at"]
+
+    # cpu['movement'] = movement_value
+    # cpu['temperature_celsius'] = float(temp_value)
+    # cpu['temperature_fahrenheit'] = float((float(temp_value) * 9 / 5) + 32) 
+    # cpu['time'] = time_value
+    import pandas as pd
+    import requests
+
+# List to store each entry's data
+    cpu_data = []
+    url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=20&timezone=Europe/Helsinki"
     response = requests.get(url)
     data = response.json()
 
+    # Loop through each entry and append data to list
     for entry in data["feeds"]:
         movement_value = entry["field1"]
         temp_value = entry["field2"]
         time_value = entry["created_at"]
+        
+        # Convert and structure data for each row
+        cpu = {
+            'movement': movement_value,
+            'temperature_celsius': float(temp_value),
+            'temperature_fahrenheit': float((float(temp_value) * 9 / 5) + 32),
+            'time': time_value
+        }
+        with open("cpu.json", "w") as file:
+                json.dump(cpu_data, file, indent=4)
+                print ("Updated data written to cpu.json")
+        
+        # Append row to the list
+        cpu_data.append(cpu)
 
-    cpu['movement'] = movement_value
-    cpu['temperature_celsius'] = float(temp_value)
-    cpu['temperature_fahrenheit'] = float((float(temp_value) * 9 / 5) + 32) 
-    cpu['time'] = time_value
+    # Create DataFrame from list of dictionaries
+    df = pd.DataFrame(cpu_data)
+    print("Pandas DataFrame:")
+    print(df)
+    
     return cpu
 
 def convert_to_finnish_time(cpu) -> None:
@@ -250,6 +285,7 @@ def main() -> None:
     users  = []
     with open("users.json", "r") as file:
         users = json.load(file)
+    thingspeak()
 
     print('Hello user, welcome to the Motion Detector! Let’s start.\n')
 
@@ -279,9 +315,7 @@ def main() -> None:
 
         if choice == '1':
             movement_detection(cpu)
-            with open("cpu.json", "w") as file:
-                json.dump(cpu, file, indent=4)
-                print ("Updated data written to cpu.json")
+            
         elif choice == '2':
             temperature_of_CPU(cpu)
         elif choice == '3':
