@@ -247,43 +247,49 @@ def game() -> None:
     return None
 
 def main() -> None:
-    
     users  = []
-
     with open("users.json", "r") as file:
         users = json.load(file)
 
     print('Hello user, welcome to the Motion Detector! Let’s start.\n')
 
-    if input("Do you have an account?\n") != 'yes':
+    print("1. Sign in")
+    print("2. Log in")
+    
+    if input("Your choice: ") != '1':
         print('\nThen lets make you one!\n')
         user = new_account(users)
     else:
         user = account_checker(users)
         print('Welcome '+user['name']+'.\n')
 
-
-    cpu = thingspeak()
-    # convert_to_finnish_time(cpu)
-    movement_detection(cpu)
-    temperature_of_CPU(cpu)
-
-    with open("cpu.json", "w") as file:
-        json.dump(cpu, file, indent=4)
-        print ("Updated data written to cpu.json")
-
-    if input('Do you wanna try to win me in the number guessing game?\n') != 'yes':
-        print('Scared of losing?')
-    else:
-        game()
-
     with open("users.json", "w") as file:
         json.dump(users, file, indent=4)
         print ("Updated data written to users.json")
+    
+    cpu = thingspeak()
+    while True:
+        print("\nMenu:")
+        print("1. Movement detection.")
+        print("2. Temperature of CPU")
+        print("3. Number guessing game")
+        print("4. Exit")
 
-    print('Program ending.')
+        choice = input('Your choice: ')
+
+        if choice == '1':
+            movement_detection(cpu)
+            with open("cpu.json", "w") as file:
+                json.dump(cpu, file, indent=4)
+                print ("Updated data written to cpu.json")
+        elif choice == '2':
+            temperature_of_CPU(cpu)
+        elif choice == '3':
+            game()
+        elif choice == '4':
+            print('Program ending.')
+            break
     return None
-
 main()
 
 

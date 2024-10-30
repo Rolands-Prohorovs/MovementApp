@@ -43,5 +43,14 @@
         "username": "MirVorn19900924",
         "rights": "super-user",
         "password": "JphK<fM957>@"
+    },
+    {
+        "name": "Roberts",
+        "surname": "Prohorovs",
+        "birthday": "04/10/2005",
+        "age": 21,
+        "username": "RobProh20051004",
+        "rights": "User",
+        "password": "7hO.T"
     }
 ]
