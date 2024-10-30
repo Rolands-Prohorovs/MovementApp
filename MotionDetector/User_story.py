@@ -99,7 +99,7 @@ def age_verif(user) -> None:
 
 def thingspeak() -> str:
     cpu = {}
-    url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=5&timezone=Europe/Helsinki"
+    url = "https://api.thingspeak.com/channels/2578404/feeds.json?api_key=XSXF6WH7DAECB6S1&results=10&timezone=Europe/Helsinki"
     response = requests.get(url)
     data = response.json()
 
