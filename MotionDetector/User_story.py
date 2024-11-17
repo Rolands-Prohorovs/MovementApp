@@ -13,36 +13,40 @@ def user_date(user) -> None:
 
     user['surname'] = input('\nWhat is you last name?\n')
     
-    user['birthday'] = input('\nWhat is you birthday date?(in dd/mm/yyyy format)\n')
-
     user['age'] = int(input('\nWhat is your age: '))
+    age_verif(user)
+    user['birthday'] = input('\nWhat is you birthday date?(in dd/mm/yyyy format)\n')
 
     return None
 
 def new_account(users) -> dict:
     user = {}
     user_date(user)
+    date_format(user)
+    print(' ')
     username_maker(users, user)
-    check_for_duplicate(users, user)
-    if user == None:
-        account_checker(users)
-    else:
+    account, user = check_for_duplicate(users, user)
+    if account == True:
         print('Welcome '+user['name']+'.\n')
-        age_verif(user)
+    elif account == False:
+        print('Welcome '+user['name']+'.\n')
         date_format(user)
-        
         right_pick(user)
         password_generator(user)
-        return user
+        with open("users.json", "w") as file:
+            json.dump(users, file, indent=4)
+        print ("Your account is saved to users.json")
+    return user
 
 def check_for_duplicate(users, user) -> dict:
+    account = False
     for i in users:
         if i['username'] == user['username']:
             print('You already have account.')
             user = i
-            return user
-        else:
-            return
+            account = True
+    users.append(user)
+    return account, user
 
 def account_checker(users) -> dict:
     user = {}    
@@ -58,7 +62,6 @@ def account_checker(users) -> dict:
 def username_maker(users, user) -> dict:
     user['username'] = user['name'][:3]+user['surname'][:4]+user['birthday'][6:11]+user['birthday'][3:5]+user['birthday'][0:2]
     print('Your username is:',user['username'],'\n')
-    users.append(user)
     return users
 
 def right_pick(user) -> None:
@@ -71,29 +74,55 @@ def right_pick(user) -> None:
     else:
         user['rights'] = 'User'
 
-    print('\nPossiable user rights:\n'
+    print('Possiable user rights:\n'
         '1 - Admin\n'
         '2 - Super-user\n'
         '3 - User')
     print('Your user right:', user['rights'])
     return None
 
-def date_format(user) -> None:
+def young_user() -> None:
     while True:
-            try:
-                birthday = datetime.strptime(user['birthday'], '%d/%m/%Y')
-                break
-            except ValueError:
-                print("Incorrect format, enter date in dd/mm/yyyy format: ")
-                user['birthday'] = input()
-                continue
+        print("\nMenu")
+        print("1. Number guessing game.")
+        print("2. Exit")
+        choice = input('Your choice: ')
+        if choice == '1':
+            game()
+            print('Thanks for visiting. Welcome back soon.')
+            exit()
+        else:
+            print('Thanks for visiting. Welcome back soon.')
+            exit()
+
+def date_format(user) -> None:    
+    while True:
+        if user['birthday'][2] and user['birthday'][5] != '/':
+            print("Incorrect format, enter date in dd/mm/yyyy format: ")
+            user['birthday'] = input()
+            continue
+        elif int(user['birthday'][6:11]) < 1924 or int(user['birthday'][6:11]) > 2020:
+            print("Incorrect year, enter date in dd/mm/yyyy format: ")
+            user['birthday'] = input()
+            continue
+        elif int(user['birthday'][6:11]) > 2006:
+            print('Greetings '+user['name']+', you are too young to operate this program')
+            young_user()
+        elif int(user['birthday'][3:5]) > 12:
+            print("Incorrect month, enter date in dd/mm/yyyy format: ")
+            user['birthday'] = input()
+            continue
+        elif int(user['birthday'][0:2]) > 31:
+            print("Incorrect day, enter date in dd/mm/yyyy format: ")
+            user['birthday'] = input()
+            continue
+        break
     return None
 
 def age_verif(user) -> None:
     if user['age'] < 18:
         print('Greetings '+user['name']+', you are too young to operate this program')
-        print('Thanks for visiting. Welcome back soon.')
-        exit()
+        young_user()
     return None
 
 def thingspeak() -> str:
@@ -243,9 +272,7 @@ def game() -> None:
             'Program:',program,'\n'
             'User:', user,'\n')
             
-            
         if input('Do you wanna play another round?\n') != 'yes':
-            print('hahaha, scared of losing?')
             break
         else:
             continue
@@ -269,7 +296,26 @@ def information_chart(cpu_data) -> None:
     return None
 
 def information_bar_chart(cpu_data) -> None:
+    
+    df = pd.DataFrame(cpu_data)
+    plt.figure(figsize=(10, 5))
+    colors = []
+    for temp in df['temperature_celsius']:
+        if temp < 47:
+            colors.append('blue')
+        else:
+            colors.append('red')
+    plt.bar(df.index, df['temperature_celsius'], width=0.4, label='Temperature', color=colors)
+    plt.xlabel('Time')
+    plt.ylabel('Temperature (Celsius)')
+    plt.title('Temperature Over Time (Sorted in Descending Order)')
+    plt.show()
 
+    plt.scatter(df.index, df['movement'], color='grey')
+    plt.xlabel('Time')
+    plt.ylabel('Movement')
+    plt.title('Movement')
+    plt.show()
     return None
 
 def account_information(user) -> None:
@@ -279,8 +325,8 @@ def account_information(user) -> None:
     print('Birthday:',user['birthday'])
     print('Age:', user['age'])
     print('Username:', user['username'])
+    print('Right:', user['rights'])
     print('Password:', user['password'])
-
     return None
 
 def main() -> None:
@@ -290,20 +336,22 @@ def main() -> None:
         users = json.load(file)
 
     print('Hello user, welcome to the Motion Detector! Let’s start.\n')
-
-    print("1. Sign in")
-    print("2. Log in")
-    
-    if input("Your choice: ") != '1':
-        user = new_account(users)
-    else:
-        user = account_checker(users)
-        print('Welcome '+user['name']+'.\n')
-
-    with open("users.json", "w") as file:
-        json.dump(users, file, indent=4)
-        print ("Your account is saved to users.json")
-    
+     
+    while True:
+        print("1. Sign in")
+        print("2. Log in")
+        choice = input("Your choice: ")
+        if choice == '1':
+            user = new_account(users)
+            break
+        else:
+            user = account_checker(users)
+            if user:
+                print('Welcome ' + user['name'] + '.\n')
+                break
+            else:
+                print("Please try again or create a new account.\n")
+            
     while True:
         print("\nMenu")
         print("1. Make a request for data of the CPU.")
@@ -334,6 +382,7 @@ def main() -> None:
                     
                 elif choice2 == '4':
                     break
+                
                 else:
                     print('Please enters 1, 2 or 3.')
                     continue
@@ -349,6 +398,5 @@ def main() -> None:
             print('Please enters 1, 2, 3 or 4.')
             continue
     return None
+
 main()
-
-
