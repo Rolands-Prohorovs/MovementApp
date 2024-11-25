@@ -1,56 +1,29 @@
 [
     {
+        "name": "",
+        "surname": "",
+        "birthday": "",
+        "age": "",
+        "username": "",
+        "rights": "",
+        "password": ""
+    },
+    {
         "name": "Rolands",
         "surname": "Prohorovs",
-        "birthday": "19/07/2005",
         "age": 19,
+        "birthday": "19/07/2005",
         "username": "RolProh20050719",
         "rights": "Admin",
         "password": "I"
     },
     {
-        "name": "Elza",
-        "surname": "Ignate",
-        "age": 18,
-        "birthday": "24/08/2006",
-        "username": "ElzIgna20060824",
-        "rights": "User",
-        "password": "D"
-    },
-    {
         "name": "Mira",
         "surname": "Vorne",
-        "age": 37,
-        "birthday": "12/11/1987",
-        "username": "MirVorn19871112",
+        "age": 30,
+        "birthday": "30/07/2000",
+        "username": "MirVorn20000730",
         "rights": "super-user",
-        "password": "Y"
-    },
-    {
-        "name": "Rolands",
-        "surname": "Prohorovs",
-        "age": 19,
-        "birthday": "19/07/2010",
-        "username": "RolProh20100719",
-        "rights": "Admin",
-        "password": "R"
-    },
-    {
-        "name": "Danik",
-        "surname": "Kragis",
-        "age": 19,
-        "birthday": "13/02/2005",
-        "username": "DanKrag20050213",
-        "rights": "User",
-        "password": "E"
-    },
-    {
-        "name": "Danik",
-        "surname": "Kragis",
-        "age": 19,
-        "birthday": "19/07/2005",
-        "username": "DanKrag20050719",
-        "rights": "User",
-        "password": "Q"
+        "password": "Z"
     }
 ]

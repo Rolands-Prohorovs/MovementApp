@@ -2,9 +2,7 @@ from datetime import datetime
 import random 
 import json 
 import requests
-import pytz
-import pandas as pd
-import requests
+import pytz     
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -338,9 +336,10 @@ def main() -> None:
     print('Hello user, welcome to the Motion Detector! Let’s start.\n')
      
     while True:
-        print("1. Sign in")
+        print("1. Create an account")
         print("2. Log in")
         choice = input("Your choice: ")
+        
         if choice == '1':
             user = new_account(users)
             break
